@@ -1,0 +1,28 @@
+syntax="proto3";
+package proto;
+
+option go_package = "./proto/order";
+import "google/api/annotations.proto";
+message Order {
+    string id = 1;
+    string name = 2;
+    int64 price = 4;
+    int64 quantity = 5;
+}
+
+message OrderRequest {
+}
+message OrderResponse {
+    // Array of orders
+    repeated Order orders = 1;
+}
+message NoParams {}
+service OrderService {
+    rpc InsertOrders(NoParams) returns (NoParams){};
+    rpc GetAllOrder(OrderRequest) returns (OrderResponse){
+        option (google.api.http) = {
+            get: "/orders"
+        };
+    }
+}
+
